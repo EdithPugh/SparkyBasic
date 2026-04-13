@@ -153,6 +153,54 @@ basic/command.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SparkyBasic.dir/build.make CMakeFiles/SparkyBasic.dir/basic/command.cpp.s
 .PHONY : basic/command.cpp.s
 
+basic/parse.o: basic/parse.cpp.o
+.PHONY : basic/parse.o
+
+# target to build an object file
+basic/parse.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SparkyBasic.dir/build.make CMakeFiles/SparkyBasic.dir/basic/parse.cpp.o
+.PHONY : basic/parse.cpp.o
+
+basic/parse.i: basic/parse.cpp.i
+.PHONY : basic/parse.i
+
+# target to preprocess a source file
+basic/parse.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SparkyBasic.dir/build.make CMakeFiles/SparkyBasic.dir/basic/parse.cpp.i
+.PHONY : basic/parse.cpp.i
+
+basic/parse.s: basic/parse.cpp.s
+.PHONY : basic/parse.s
+
+# target to generate assembly for a file
+basic/parse.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SparkyBasic.dir/build.make CMakeFiles/SparkyBasic.dir/basic/parse.cpp.s
+.PHONY : basic/parse.cpp.s
+
+basic/token.o: basic/token.cpp.o
+.PHONY : basic/token.o
+
+# target to build an object file
+basic/token.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SparkyBasic.dir/build.make CMakeFiles/SparkyBasic.dir/basic/token.cpp.o
+.PHONY : basic/token.cpp.o
+
+basic/token.i: basic/token.cpp.i
+.PHONY : basic/token.i
+
+# target to preprocess a source file
+basic/token.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SparkyBasic.dir/build.make CMakeFiles/SparkyBasic.dir/basic/token.cpp.i
+.PHONY : basic/token.cpp.i
+
+basic/token.s: basic/token.cpp.s
+.PHONY : basic/token.s
+
+# target to generate assembly for a file
+basic/token.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SparkyBasic.dir/build.make CMakeFiles/SparkyBasic.dir/basic/token.cpp.s
+.PHONY : basic/token.cpp.s
+
 main.o: main.cpp.o
 .PHONY : main.o
 
@@ -189,6 +237,12 @@ help:
 	@echo "... basic/command.o"
 	@echo "... basic/command.i"
 	@echo "... basic/command.s"
+	@echo "... basic/parse.o"
+	@echo "... basic/parse.i"
+	@echo "... basic/parse.s"
+	@echo "... basic/token.o"
+	@echo "... basic/token.i"
+	@echo "... basic/token.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

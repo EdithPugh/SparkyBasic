@@ -9,6 +9,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/edith/dev/sparkybasic/src/basic/command.cpp" "CMakeFiles/SparkyBasic.dir/basic/command.cpp.o" "gcc" "CMakeFiles/SparkyBasic.dir/basic/command.cpp.o.d"
+  "/home/edith/dev/sparkybasic/src/basic/parse.cpp" "CMakeFiles/SparkyBasic.dir/basic/parse.cpp.o" "gcc" "CMakeFiles/SparkyBasic.dir/basic/parse.cpp.o.d"
+  "/home/edith/dev/sparkybasic/src/basic/token.cpp" "CMakeFiles/SparkyBasic.dir/basic/token.cpp.o" "gcc" "CMakeFiles/SparkyBasic.dir/basic/token.cpp.o.d"
   "/home/edith/dev/sparkybasic/src/main.cpp" "CMakeFiles/SparkyBasic.dir/main.cpp.o" "gcc" "CMakeFiles/SparkyBasic.dir/main.cpp.o.d"
   )
 

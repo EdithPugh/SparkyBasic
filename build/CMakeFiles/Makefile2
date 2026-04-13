@@ -98,12 +98,12 @@ basic/clean:
 CMakeFiles/SparkyBasic.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SparkyBasic.dir/build.make CMakeFiles/SparkyBasic.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SparkyBasic.dir/build.make CMakeFiles/SparkyBasic.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/edith/dev/sparkybasic/build/CMakeFiles --progress-num=1,2,3 "Built target SparkyBasic"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/edith/dev/sparkybasic/build/CMakeFiles --progress-num=1,2,3,4,5 "Built target SparkyBasic"
 .PHONY : CMakeFiles/SparkyBasic.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/SparkyBasic.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/edith/dev/sparkybasic/build/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/edith/dev/sparkybasic/build/CMakeFiles 5
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/SparkyBasic.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/edith/dev/sparkybasic/build/CMakeFiles 0
 .PHONY : CMakeFiles/SparkyBasic.dir/rule

@@ -8,25 +8,32 @@
 namespace basic {
     struct Token {
         enum Type {
+            // erases all stored commands
+            KwNew,
+            // executes commands in program
+            KwRun,
+            // lists all the commands in program, sorted by line number.
+            KwList,
+            // frees a value
+            KwClear,
+            // prints a value
+            KwPrint,
+            // prints a question mark and space, then takes input and places it
+            // in a variable. If no input is entered, the program is aborted.
+            KwInput,
+            // optional for declaring a new variable
+            KwLet,
+            // allows additional list memory to be allocate by variables
+            // (all variables can be trivially converted to lists)
+            KwDim,
+            // If and Then keywords for condititonal jumping, else is not
+            // supported in either 4k or 8k BASIC as far as I can tell
+            KwIf,
+            KwThen,
+
             // Like NumLiteral, but no funny business with negatives or non-int
             // values.
             LineNum,
-
-            // erases all stored commands
-            New,
-            // executes commands in program
-            Run,
-            // lists all the commands in program, sorted by line number.
-            List,
-
-            // frees a value
-            Clear,
-            // prints a value
-            Print,
-            // prints a question mark and space, then takes input and places it
-            // in a variable. If no input is entered, the program is aborted.
-            Input,
-
             // a number
             NumLiteral,
             // a string
@@ -53,7 +60,10 @@ namespace basic {
             CloseParen,
 
             // For variable names
-            Var,
+            NumVar,
+
+            // For variable names which end in $
+            StrVar,
         } type; // End enum Type
 
         std::variant<std::monostate, std::string, double, size_t> value;
@@ -61,7 +71,7 @@ namespace basic {
         static Token from_literal(double num);
         static Token from_literal(std::string&& str);
         static Token from_line_num(size_t num);
-        static Token from_var_or_keyword(std::string&& id);
+        static Token from_var_or_keyword(const std::string& id);
         
         Token(Type sym)
             : type(sym)
