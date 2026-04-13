@@ -1,1 +1,0 @@
-/usr/bin/clang++  -pthread CMakeFiles/SparkyBasic.dir/main.cpp.o CMakeFiles/SparkyBasic.dir/basic/command.cpp.o CMakeFiles/SparkyBasic.dir/basic/parse.cpp.o CMakeFiles/SparkyBasic.dir/basic/token.cpp.o -o SparkyBasic  -L/usr/lib/x86_64-linux-gnu -pthread -lwx_gtk3u_core-3.2 -lwx_baseu-3.2 

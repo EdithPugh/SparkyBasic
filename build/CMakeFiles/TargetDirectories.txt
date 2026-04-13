@@ -1,5 +1,0 @@
-/home/edith/dev/sparkybasic/build/CMakeFiles/SparkyBasic.dir
-/home/edith/dev/sparkybasic/build/CMakeFiles/edit_cache.dir
-/home/edith/dev/sparkybasic/build/CMakeFiles/rebuild_cache.dir
-/home/edith/dev/sparkybasic/build/basic/CMakeFiles/edit_cache.dir
-/home/edith/dev/sparkybasic/build/basic/CMakeFiles/rebuild_cache.dir
