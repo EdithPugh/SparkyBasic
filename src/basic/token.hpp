@@ -69,7 +69,7 @@ namespace basic {
         std::variant<std::monostate, std::string, double, size_t> value;
 
         static Token from_literal(double num);
-        static Token from_literal(std::string&& str);
+        static Token from_literal(const std::string& str);
         static Token from_line_num(size_t num);
         static Token from_var_or_keyword(const std::string& id);
         
