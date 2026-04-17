@@ -13,7 +13,7 @@
 #include <optional>
 #include <variant>
 
-using namespace basic::lexer;
+namespace basic::lexer {
 
 // helper function to eat line num
 std::optional<LexResult::Err> lex_line_num(const std::string& line,
@@ -72,4 +72,6 @@ std::optional<LexResult::Err> lex_line_num(const std::string& line,
         tokens.push_back(Token::from_line_num(line_num));
     }
     return std::nullopt;
+}
+
 }
