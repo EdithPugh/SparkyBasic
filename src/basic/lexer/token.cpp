@@ -7,7 +7,7 @@
 
 #include <sstream>
 
-using namespace basic::lexer;
+namespace basic::lexer {
 
 Token Token::from_literal(double num) {
     return Token(Token::NumLiteral, num);
@@ -40,4 +40,6 @@ Token Token::from_var_or_keyword(const std::string& id) {
     else {
         return Token(Token::StrVar, id_upper);
     }
+}
+
 }

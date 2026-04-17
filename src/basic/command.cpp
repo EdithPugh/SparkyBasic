@@ -4,7 +4,7 @@
 
 #include <cassert>
 
-using namespace basic;
+namespace basic {
 
 bool Command::is_direct_command(void) const {
     // aborts if statement is somehow in an invalid state
@@ -24,3 +24,5 @@ unsigned int Command::get_line_number(void) const {
     assert(line_num >= 0.0);
     return static_cast<unsigned int>(line_num);
 } // end Command::get_line_number
+
+}

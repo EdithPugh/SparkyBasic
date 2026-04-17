@@ -1,7 +1,6 @@
 #pragma once
 // By Edith Pugh on 2026-04-14
 
-#include <optional>
 #include <string>
 
 #include "lex_line.hpp"

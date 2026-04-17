@@ -10,7 +10,7 @@
 #include <string>
 #include <sstream>
 
-using namespace basic::lexer;
+namespace basic::lexer {
 
 // lexes one token from the line
 std::variant<Token, LexResult::Err> lex_token(const std::string& line,
@@ -31,7 +31,10 @@ std::variant<Token, LexResult::Err> lex_token(const std::string& line,
         return Token::from_var_or_keyword(id.str());
     }
     // match string
-    
+    if (line[index] == '"') {
+        return lex_string(line, index);
+    }
+    // match number
     if (std::isdigit(line[index]) || line[index] == '.') {
         return lex_num(line, index);
     }
@@ -74,4 +77,6 @@ std::variant<Token, LexResult::Err> lex_token(const std::string& line,
         err_msg << line[index];
         return LexResult::Err{err_msg.str()};
     } // end switch(line[index])
+}
+
 }
