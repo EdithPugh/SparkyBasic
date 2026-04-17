@@ -3,11 +3,6 @@
 #include "myframe.hpp"
 
 #include "defs.hpp"
-#include <wx/event.h>
-#include <wx/gdicmn.h>
-#include <wx/gtk/textctrl.h>
-#include <wx/sizer.h>
-#include <wx/textctrl.h>
 #include <wx/wx.h>
 
 enum MenuIDs {
