@@ -5,4 +5,5 @@ target_sources(${PROJECT_NAME}
     lex_line.cpp
     lex_token.cpp
     lex_literals.cpp
+    token.cpp
 )

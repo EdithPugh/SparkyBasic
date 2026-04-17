@@ -3,6 +3,7 @@
 #include "myframe.hpp"
 
 #include "defs.hpp"
+#include <wx/event.h>
 
 enum MenuIDs {
     ID_Save = 1,
@@ -14,19 +15,9 @@ enum MenuIDs {
     ID_New,
 };
 
-BEGIN_EVENT_TABLE(MyFrame, wxFrame)
-EVT_MENU(ID_Save, MyFrame::on_save)
-EVT_MENU(ID_SaveAs, MyFrame::on_save_as)
-EVT_MENU(ID_SaveCopy, MyFrame::on_save_copy)
-EVT_MENU(ID_Load, MyFrame::on_load)
-EVT_MENU(ID_Help, MyFrame::on_help)
-EVT_MENU(ID_Exit, MyFrame::on_close)
-EVT_CLOSE(MyFrame::on_close)
-END_EVENT_TABLE()
-
-MyFrame::MyFrame(void) {
-    menu_bar = new wxMenuBar();
-
+MyFrame::MyFrame(void)
+    :wxFrame(nullptr, wxID_ANY, k_app_name)
+{
     menu_file = new wxMenu();
     menu_help = new wxMenu();
 
@@ -54,7 +45,7 @@ MyFrame::MyFrame(void) {
     menu_file->Append(
         ID_SaveCopy,
         "&Save Copy...\tAlt-Ctrl-S",
-        "Save commands in new file without making it the current file"
+        "Save commands in new file without making it the current file."
     );
     menu_file->AppendSeparator();
     menu_file->Append(
@@ -62,4 +53,45 @@ MyFrame::MyFrame(void) {
         "&Exit SparkyBasic\tCtrl-Q",
         "Exit SparkyBasic without saving."
     );
+
+    menu_help->Append(
+        ID_Help,
+        "&Help\tCtrl-h",
+        "Open help dialogue."
+    );
+
+    wxMenuBar* menu_bar = new wxMenuBar;
+    menu_bar->Append(menu_file, "&File");
+    menu_bar->Append(menu_help, "&Help");
+
+    SetMenuBar(menu_bar);
+    
+    SetSize(k_default_win_size_x, k_default_win_size_y);
+
+    Bind(wxEVT_MENU, &MyFrame::on_save, this, ID_Save);
+    Bind(wxEVT_MENU, &MyFrame::on_save_as, this, ID_SaveAs);
+    Bind(wxEVT_MENU, &MyFrame::on_save_copy, this, ID_SaveCopy);
+    Bind(wxEVT_MENU, &MyFrame::on_load, this, ID_Load);
+    Bind(wxEVT_MENU, &MyFrame::on_help, this, ID_Help);
 } // end MyFrame::MyFrame
+
+void MyFrame::on_save(wxCommandEvent& evt) {
+    (void)evt;
+    return;
+}
+void MyFrame::on_save_as(wxCommandEvent& evt) {
+    (void)evt;
+    return;
+}
+void MyFrame::on_save_copy(wxCommandEvent& evt) {
+    (void)evt;
+    return;
+}
+void MyFrame::on_load(wxCommandEvent& evt) {
+    (void)evt ;
+    return;
+}
+void MyFrame::on_help(wxCommandEvent& evt) {
+    (void)evt;
+    return;
+}

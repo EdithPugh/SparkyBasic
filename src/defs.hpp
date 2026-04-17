@@ -4,6 +4,6 @@
 
 #include <string>
 
-const std::string k_app_name = "SparkyBasic";
+const std::string k_app_name = "SparkyBasic PREALPHA";
 const unsigned int k_default_win_size_x = 600;
 const unsigned int k_default_win_size_y = 400;
