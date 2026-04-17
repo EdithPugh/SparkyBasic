@@ -9,10 +9,14 @@ class MyFrame : public wxFrame {
     wxMenu* menu_file;
     wxMenu* menu_help;
     
-    //wxPanel* panel;
+    wxPanel* panel;
 
-    //wxTextCtrl* output_box;
-    //wxTextCtrl* entry_box;
+    wxBoxSizer* sizer;
+
+    wxTextCtrl* output_box;
+    wxBoxSizer* output_sizer;
+    wxTextCtrl* entry_box;
+    wxBoxSizer* entry_sizer;
 
     void on_save(wxCommandEvent& evt);
     void on_save_as(wxCommandEvent& evt);

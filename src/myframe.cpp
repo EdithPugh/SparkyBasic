@@ -4,6 +4,11 @@
 
 #include "defs.hpp"
 #include <wx/event.h>
+#include <wx/gdicmn.h>
+#include <wx/gtk/textctrl.h>
+#include <wx/sizer.h>
+#include <wx/textctrl.h>
+#include <wx/wx.h>
 
 enum MenuIDs {
     ID_Save = 1,
@@ -65,14 +70,34 @@ MyFrame::MyFrame(void)
     menu_bar->Append(menu_help, "&Help");
 
     SetMenuBar(menu_bar);
-    
-    SetSize(k_default_win_size_x, k_default_win_size_y);
 
     Bind(wxEVT_MENU, &MyFrame::on_save, this, ID_Save);
     Bind(wxEVT_MENU, &MyFrame::on_save_as, this, ID_SaveAs);
     Bind(wxEVT_MENU, &MyFrame::on_save_copy, this, ID_SaveCopy);
     Bind(wxEVT_MENU, &MyFrame::on_load, this, ID_Load);
     Bind(wxEVT_MENU, &MyFrame::on_help, this, ID_Help);
+
+    output_box = new wxTextCtrl(
+        this,
+        wxID_ANY,
+        "",
+        wxDefaultPosition,
+        wxDefaultSize,
+        wxTE_MULTILINE | wxTE_READONLY | wxTE_CHARWRAP
+    );
+    output_sizer = new wxBoxSizer(wxHORIZONTAL);
+    output_sizer->Add(output_box, 1, wxEXPAND);
+
+    entry_box = new wxTextCtrl(this, wxID_ANY);
+    entry_sizer = new wxBoxSizer(wxHORIZONTAL);
+    entry_sizer->Add(entry_box, 1, wxEXPAND);
+
+    sizer = new wxBoxSizer(wxVERTICAL);
+    sizer->Add(output_sizer, 1, wxEXPAND);
+    sizer->Add(entry_sizer, 0, wxEXPAND);
+    SetSizerAndFit(sizer);
+
+    SetSize(k_default_win_size_x, k_default_win_size_y);
 } // end MyFrame::MyFrame
 
 void MyFrame::on_save(wxCommandEvent& evt) {
