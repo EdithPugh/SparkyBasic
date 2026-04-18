@@ -1,0 +1,77 @@
+// By Edith Pugh on 2026-04-10
+
+#include "lex_line.hpp"
+
+#include "token.hpp"
+#include "error_messages.hpp"
+#include "lex_token.hpp"
+
+#include <vector>
+#include <cctype>
+#include <sstream>
+#include <string>
+#include <optional>
+#include <variant>
+
+namespace basic::lexer {
+
+// helper function to eat line num
+std::optional<LexResult::Err> lex_line_num(const std::string& line,
+    size_t& index,
+    std::vector<Token>& tokens);
+
+LexResult lex_line(const std::string& line) {
+    std::vector<Token> tokens;
+    size_t index = 0;
+    { // run line num
+        auto opt_result = lex_line_num(line, index, tokens);
+        if (opt_result.has_value()) {
+            return {
+                opt_result.value()
+            };
+        }
+    }
+    // now get to actual tokenizing
+    while (index < line.size()) {
+        auto token_result = lex_token(line, index);
+        if (std::holds_alternative<Token>(token_result)) {
+            tokens.push_back(std::get<Token>(token_result));
+        }
+        else {
+            return {std::get<LexResult::Err>(token_result)};
+        }
+    } // end while(index < line.size())
+    return {
+        LexResult::Ok{tokens}
+    };
+} // end lex_line
+
+std::optional<LexResult::Err> lex_line_num(const std::string& line,
+    size_t& index,
+    std::vector<Token>& tokens) {
+    // skip initial whitespace to allow for indentation
+    while (std::isspace(line[index])) {
+        index++;
+    }
+    if (line[index] == '0') {
+        return LexResult::Err{k_msg_line_num_leading_zero};
+    }
+    if (line[index] == '-') {
+        return LexResult::Err{k_msg_line_num_negative};
+    }
+    // eat linenum rq
+    std::stringstream line_num_stream;
+    while (index < line.size() && std::isdigit(line[index])) {
+        line_num_stream << line[index];
+        index++;
+    }
+    std::string line_num_string = line_num_stream.str();
+    if (line_num_string.size() != 0) {
+        // shouldn't throw, since it's just a string of digits
+        size_t line_num = std::stoul(line_num_string);
+        tokens.push_back(Token::from_line_num(line_num));
+    }
+    return std::nullopt;
+}
+
+}
