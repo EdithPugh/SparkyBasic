@@ -10,6 +10,7 @@ enum MenuIDs {
     ID_SaveAs,
     ID_SaveCopy,
     ID_Load,
+    ID_Append,
     ID_Help,
     ID_Exit,
     ID_New,
@@ -30,6 +31,11 @@ MyFrame::MyFrame(void)
         ID_Load,
         "&Load\tCtrl-O",
         "Clear current program and load in program file."
+    );
+    menu_file->Append(
+        ID_Append,
+        "&Append\tShift-Ctrl-O",
+        "Load file into memory without clearing current program."
     );
     menu_file->AppendSeparator();
     menu_file->Append(
@@ -60,18 +66,21 @@ MyFrame::MyFrame(void)
         "Open help dialogue."
     );
 
+    // Add menu bar to frame
     wxMenuBar* menu_bar = new wxMenuBar;
     menu_bar->Append(menu_file, "&File");
     menu_bar->Append(menu_help, "&Help");
-
     SetMenuBar(menu_bar);
 
-    Bind(wxEVT_MENU, &MyFrame::on_save, this, ID_Save);
-    Bind(wxEVT_MENU, &MyFrame::on_save_as, this, ID_SaveAs);
-    Bind(wxEVT_MENU, &MyFrame::on_save_copy, this, ID_SaveCopy);
-    Bind(wxEVT_MENU, &MyFrame::on_load, this, ID_Load);
-    Bind(wxEVT_MENU, &MyFrame::on_help, this, ID_Help);
+    // Bind menu actions to functions
+    auto TODO_REPLACE_ME = [](wxCommandEvent&){};
+    Bind(wxEVT_MENU, TODO_REPLACE_ME, ID_Save);
+    Bind(wxEVT_MENU, TODO_REPLACE_ME, ID_SaveAs);
+    Bind(wxEVT_MENU, TODO_REPLACE_ME, ID_SaveCopy);
+    Bind(wxEVT_MENU, TODO_REPLACE_ME, ID_Load);
+    Bind(wxEVT_MENU, TODO_REPLACE_ME, ID_Help);
 
+    // create the output box
     output_box = new wxTextCtrl(
         this,
         wxID_ANY,
@@ -83,35 +92,17 @@ MyFrame::MyFrame(void)
     output_sizer = new wxBoxSizer(wxHORIZONTAL);
     output_sizer->Add(output_box, 1, wxEXPAND);
 
+    // create the entry box
     entry_box = new wxTextCtrl(this, wxID_ANY);
     entry_sizer = new wxBoxSizer(wxHORIZONTAL);
     entry_sizer->Add(entry_box, 1, wxEXPAND);
 
+    // add both the entry box and output box into the main vertical sizer
     sizer = new wxBoxSizer(wxVERTICAL);
     sizer->Add(output_sizer, 1, wxEXPAND);
     sizer->Add(entry_sizer, 0, wxEXPAND);
     SetSizerAndFit(sizer);
 
+    // Set program to a default size
     SetSize(k_default_win_size_x, k_default_win_size_y);
 } // end MyFrame::MyFrame
-
-void MyFrame::on_save(wxCommandEvent& evt) {
-    (void)evt;
-    return;
-}
-void MyFrame::on_save_as(wxCommandEvent& evt) {
-    (void)evt;
-    return;
-}
-void MyFrame::on_save_copy(wxCommandEvent& evt) {
-    (void)evt;
-    return;
-}
-void MyFrame::on_load(wxCommandEvent& evt) {
-    (void)evt ;
-    return;
-}
-void MyFrame::on_help(wxCommandEvent& evt) {
-    (void)evt;
-    return;
-}

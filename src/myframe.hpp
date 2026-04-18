@@ -18,12 +18,9 @@ class MyFrame : public wxFrame {
     wxTextCtrl* entry_box;
     wxBoxSizer* entry_sizer;
 
-    void on_save(wxCommandEvent& evt);
-    void on_save_as(wxCommandEvent& evt);
-    void on_save_copy(wxCommandEvent& evt);
-    void on_load(wxCommandEvent& evt);
-    void on_help(wxCommandEvent& evt);
-    void on_close(wxCloseEvent& evt);
+    // helper functions to setup the menus
+    void setup_file_menu(void);
+    void setup_help_menu(void);
 public:
     MyFrame(void);
 }; // end class MyFrame

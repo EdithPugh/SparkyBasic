@@ -23,5 +23,6 @@ target_sources(${PROJECT_NAME}
     PRIVATE
     main.cpp
     myframe.cpp
+    command.cpp
 )
-add_subdirectory(basic)
+add_subdirectory(lexer)
