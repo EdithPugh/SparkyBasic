@@ -126,26 +126,17 @@ public:
     static Token from_var_or_keyword(const std::string& id);
     /**
      * The base constructor for tokens that are not literals, identifiers, or 
-     * line nums. Will throw if a token of that type is created, because
-     * optional constructors are not allow in C++.
-     * Idea: reimplement as static function "new"?
+     * line nums.
+     * @param new_type the type of the new token. must refer to a monostatic
+     * type, i.e. not a literal, var name, or line number.
+     * @return an optional that contains the new Token if param was valid.
      */
-    Token(Type type)
-        : type(type)
-        , value(std::monostate()) {
-        assert(
-            type != NumLiteral
-            && type != StrLiteral
-            && type != StrVar
-            && type != NumVar
-            && type != LineNum
-        );
-    }
+    static std::optional<Token> from_mono(Type new_type);
     
     friend std::ostream& operator<<(std::ostream& os, const Token& token);
 private:
     Token(Type type, std::variant<std::monostate, 
-        std::string, double, size_t>&& value)
+        std::string, double, size_t> value)
         : type(type)
         , value(std::move(value)) {}
 }; // End struct Token

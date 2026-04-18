@@ -42,32 +42,32 @@ std::variant<Token, LexResult::Err> lex_token(const std::string& line,
     switch (line[index]) {
     case '(': 
         index++;
-        return Token(Token::OpenParen);
+        return Token::from_mono(Token::OpenParen).value();
     case ')':
         index++; 
-        return Token(Token::CloseParen);
+        return Token::from_mono(Token::CloseParen).value();
     case '=':
         index++;
-        return Token(Token::Equal);
+        return Token::from_mono(Token::Equal).value();
     case '>':
         if (index + 1 >= line.size() || line[index + 1] != '=') {
             index++;
-            return Token(Token::GreaterThan);
+            return Token::from_mono(Token::GreaterThan).value();
         } else {
             index += 2;
-            return Token(Token::GreaterThanOrEqualTo);
+            return Token::from_mono(Token::GreaterThanOrEqualTo).value();
         }
     case '<':
         if (index + 1 >= line.size()
             || (line[index + 1] != '=' && line[index + 1] != '>')) {
             index++;
-            return Token(Token::LessThan);
+            return Token::from_mono(Token::LessThan).value();
         } else if (line[index + 1] == '>') {
             index += 2;
-            return Token(Token::NotEqualTo);
+            return Token::from_mono(Token::NotEqualTo).value();
         } else {
             index += 2;
-            return Token(Token::LessThanOrEqualTo);
+            return Token::from_mono(Token::LessThanOrEqualTo).value();
         }
     default:
         // since literal and keyword functions already return, this means that
