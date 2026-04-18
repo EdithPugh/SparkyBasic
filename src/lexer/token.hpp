@@ -73,8 +73,8 @@ public:
         CloseParen,
     };
 private:
-    Type type;
-    std::variant<std::monostate, std::string, double, size_t> value;
+    const Type type;
+    const std::variant<std::monostate, std::string, double, size_t> value;
 public:
     Type get_type(void) const { return type; }
     
