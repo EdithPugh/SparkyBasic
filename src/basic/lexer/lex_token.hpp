@@ -6,6 +6,8 @@
 #include "lex_line.hpp"
 
 namespace basic::lexer {
-    std::variant<Token, LexResult::Err> lex_token(const std::string& line,
-        size_t& index);
+
+std::variant<Token, LexResult::Err> lex_token(const std::string& line,
+    size_t& index);
+
 }
