@@ -7,7 +7,7 @@
 
 #include <sstream>
 
-namespace basic::lexer {
+namespace lexer {
 
 Token Token::from_literal(double num) {
     return Token(Token::NumLiteral, num);
@@ -40,6 +40,31 @@ Token Token::from_var_or_keyword(const std::string& id) {
     else {
         return Token(Token::StrVar, id_upper);
     }
+}
+
+std::optional<std::string> Token::get_var_name(void) const {
+    if (type == NumVar || type == StrVar) {
+        return std::get<std::string>(value);
+    }
+    return std::nullopt;
+}
+std::optional<std::string> Token::get_string(void) const {
+    if (type == StrLiteral) {
+        return std::get<std::string>(value);
+    }
+    return std::nullopt;
+}
+std::optional<double> Token::get_number(void) const {
+    if (type == NumLiteral) {
+        return std::get<double>(value);
+    }
+    return std::nullopt;
+}
+std::optional<size_t> Token::get_line_num(void) const {
+    if (type == LineNum) {
+        return std::get<size_t>(value);
+    }
+    return std::nullopt;
 }
 
 }

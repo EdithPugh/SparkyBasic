@@ -5,10 +5,15 @@
 #include <string>
 #include <cassert>
 #include <ostream>
+#include <optional>
 
-namespace basic::lexer {
+namespace lexer {
 
-struct Token {
+/**
+ * A struct representing a single Token produced by the lexer.
+ */
+class Token {
+public:
     enum Type {
         // erases all stored commands
         KwNew,
@@ -66,20 +71,78 @@ struct Token {
         // Just used for indexing lists, as far as I can tell
         OpenParen,
         CloseParen,
-    } type; // End enum Type
-
+    };
+private:
+    Type type;
     std::variant<std::monostate, std::string, double, size_t> value;
-
-    static Token from_literal(double num);
-    static Token from_literal(const std::string& str);
-    static Token from_line_num(size_t num);
-    static Token from_var_or_keyword(const std::string& id);
+public:
+    Type get_type(void) const { return type; }
     
-    Token(Type sym)
-        : type(sym)
+    /**
+     * Getter function for the name of a num or str variable.
+     * @result: Returns nullopt if the token is not a num or str variable.
+     */
+    std::optional<std::string> get_var_name(void) const;
+    /**
+     * Getter function returning the contents of a string literal, without the
+     * surrounding quotes.
+     * @result: Returns nullopt if the token is not a string literal.
+     */
+    std::optional<std::string> get_string(void) const; 
+    /**
+     * Getter function that returns the value of a num literal.
+     * @result: Returns nullopt if the token is not a num literal.
+     */
+    std::optional<double> get_number(void) const;
+    /**
+     * A getter function for the line num token that returns the line num.
+     * @result: Returns nullopt if the token is not a line number.
+     */
+    std::optional<size_t> get_line_num(void) const;
+    /**
+     * Creates a token from a num literal.
+     * @param num the number that comprises the literal
+     * @return the newly constructed token.
+     */
+    static Token from_literal(double num);
+    /**
+     * Creates a token from a string literal
+     * @param str the string that comprises the literal, without quotes.
+     * @return the newly constructed token
+     */
+    static Token from_literal(const std::string& str);
+    /**
+     * Creates a token from a line number literal.
+     * @param num the line number
+     * @return the newly constructed token
+     */
+    static Token from_line_num(size_t num);
+    /**
+     * Creates a token from a set of uppercase letters and optionally a dollar
+     * sign at the end.
+     * @param id the characters that make up the symbol
+     * @return a new Token that is either a keyword, function, or variable name.
+     */
+    static Token from_var_or_keyword(const std::string& id);
+    /**
+     * The base constructor for tokens that are not literals, identifiers, or 
+     * line nums. Will throw if a token of that type is created, because
+     * optional constructors are not allow in C++.
+     * Idea: reimplement as static function "new"?
+     */
+    Token(Type type)
+        : type(type)
         , value(std::monostate()) {
-        assert(sym != NumLiteral && sym != StrLiteral);
+        assert(
+            type != NumLiteral
+            && type != StrLiteral
+            && type != StrVar
+            && type != NumVar
+            && type != LineNum
+        );
     }
+    
+    friend std::ostream& operator<<(std::ostream& os, const Token& token);
 private:
     Token(Type type, std::variant<std::monostate, 
         std::string, double, size_t>&& value)
@@ -87,6 +150,13 @@ private:
         , value(std::move(value)) {}
 }; // End struct Token
 
+/**
+ * Allows a Token to be directly outputted into a stream for debug purposes.
+ * Will print the Token's type as well as any value it may have.
+ * @param os: The stream that the Token is printed to.
+ * @param token: The Token that is to be printed.
+ * @return returns os as is standard with stream operators.
+ */
 std::ostream& operator<<(std::ostream& os, const Token& token);
 
 }

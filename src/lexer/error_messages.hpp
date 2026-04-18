@@ -1,9 +1,13 @@
 #pragma once
 // By Edith Pugh on 2026-04-14
 
+/**
+ * A file containing error messages used by the lexer.
+ */
+
 #include <string>
 
-namespace basic::lexer {
+namespace lexer {
 
 const std::string k_msg_line_num_leading_zero
     = "SN: Line numbers cannot have leading zeroes.";

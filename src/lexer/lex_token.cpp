@@ -10,7 +10,7 @@
 #include <string>
 #include <sstream>
 
-namespace basic::lexer {
+namespace lexer {
 
 // lexes one token from the line
 std::variant<Token, LexResult::Err> lex_token(const std::string& line,

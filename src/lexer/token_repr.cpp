@@ -2,7 +2,7 @@
 
 #include "token.hpp"
 
-namespace basic::lexer {
+namespace lexer {
 
 const std::string k_KwNew_str = "Kw.New";
 const std::string k_KwRun_str = "Kw.Run";

@@ -9,7 +9,7 @@
 #include <cassert>
 #include <stdexcept>
 
-namespace basic::lexer {
+namespace lexer {
 
 std::variant<Token, LexResult::Err> lex_string(
     const std::string& line, size_t& index) {
