@@ -12,7 +12,7 @@
 namespace lexer {
 
 std::variant<Token, LexResult::Err> lex_string(
-    const std::string& line, size_t& index) {
+    std::string_view line, size_t& index) {
     assert(line[index] == '"');
     index++;
     std::stringstream str_literal;
@@ -67,7 +67,7 @@ bool is_num_component(char com) {
 // match numbers, initial + or - is not included as those are handled by
 // the parser
 std::variant<Token, LexResult::Err> lex_num(
-    const std::string& line, size_t& index) {
+    std::string_view line, size_t& index) {
     assert(std::isdigit(line[index]) || line[index] == '.');
     std::stringstream num;
 

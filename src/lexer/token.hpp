@@ -73,8 +73,18 @@ public:
         CloseParen,
     };
 private:
+    using ValueType = std::variant<
+        std::monostate,
+        std::string,
+        double,
+        size_t
+    >;
+
     const Type type;
-    const std::variant<std::monostate, std::string, double, size_t> value;
+    const ValueType value;
+    Token(Type type, ValueType value)
+        : type(type)
+        , value(value) {}
 public:
     Type get_type(void) const { return type; }
     
@@ -82,13 +92,13 @@ public:
      * Getter function for the name of a num or str variable.
      * @result: Returns nullopt if the token is not a num or str variable.
      */
-    std::optional<std::string> get_var_name(void) const;
+    std::optional<std::string_view> get_var_name(void) const;
     /**
      * Getter function returning the contents of a string literal, without the
      * surrounding quotes.
      * @result: Returns nullopt if the token is not a string literal.
      */
-    std::optional<std::string> get_string(void) const; 
+    std::optional<std::string_view> get_string(void) const; 
     /**
      * Getter function that returns the value of a num literal.
      * @result: Returns nullopt if the token is not a num literal.
@@ -110,7 +120,7 @@ public:
      * @param str the string that comprises the literal, without quotes.
      * @return the newly constructed token
      */
-    static Token from_literal(const std::string& str);
+    static Token from_literal(std::string&& str);
     /**
      * Creates a token from a line number literal.
      * @param num the line number
@@ -123,7 +133,7 @@ public:
      * @param id the characters that make up the symbol
      * @return a new Token that is either a keyword, function, or variable name.
      */
-    static Token from_var_or_keyword(const std::string& id);
+    static Token from_var_or_keyword(std::string&& id);
     /**
      * The base constructor for tokens that are not literals, identifiers, or 
      * line nums.
@@ -134,11 +144,6 @@ public:
     static std::optional<Token> from_mono(Type new_type);
     
     friend std::ostream& operator<<(std::ostream& os, const Token& token);
-private:
-    Token(Type type, std::variant<std::monostate, 
-        std::string, double, size_t> value)
-        : type(type)
-        , value(std::move(value)) {}
 }; // End struct Token
 
 /**

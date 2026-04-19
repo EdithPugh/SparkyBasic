@@ -24,6 +24,6 @@ struct LexResult {
  * @param line: The input string that is to be tokenized.
  * @return: Returns a LexResult, a simple wrapped around std::variant.
  */
-LexResult lex_line(const std::string& line);
+LexResult lex_line(std::string_view line);
 
 } // end namespace basic

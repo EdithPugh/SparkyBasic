@@ -4,8 +4,6 @@
 
 #include <cassert>
 
-namespace basic {
-
 std::optional<bool> Command::is_direct_command(void) const {
     if (tokens.size() == 0) {
         return std::nullopt;
@@ -20,5 +18,3 @@ std::optional<size_t> Command::get_line_number(void) const {
 
     return tokens[0].get_line_num().value();
 } // end Command::get_line_number
-
-}

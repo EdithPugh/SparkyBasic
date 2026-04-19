@@ -16,11 +16,11 @@
 namespace lexer {
 
 // helper function to eat line num
-std::optional<LexResult::Err> lex_line_num(const std::string& line,
+std::optional<LexResult::Err> lex_line_num(std::string_view line,
     size_t& index,
     std::vector<Token>& tokens);
 
-LexResult lex_line(const std::string& line) {
+LexResult lex_line(std::string_view line) {
     std::vector<Token> tokens;
     size_t index = 0;
     { // run line num
@@ -46,7 +46,7 @@ LexResult lex_line(const std::string& line) {
     };
 } // end lex_line
 
-std::optional<LexResult::Err> lex_line_num(const std::string& line,
+std::optional<LexResult::Err> lex_line_num(std::string_view line,
     size_t& index,
     std::vector<Token>& tokens) {
     // skip initial whitespace to allow for indentation

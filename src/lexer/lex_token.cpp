@@ -13,7 +13,7 @@
 namespace lexer {
 
 // lexes one token from the line
-std::variant<Token, LexResult::Err> lex_token(const std::string& line,
+std::variant<Token, LexResult::Err> lex_token(std::string_view line,
     size_t& index) {
     // match identifiers
     if (std::isalpha(line[index])) {

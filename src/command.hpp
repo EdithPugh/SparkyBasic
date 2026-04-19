@@ -2,14 +2,12 @@
 // By Edith Pugh on 2026-04-10, Sparky's third birthday
 
 #include "lexer/token.hpp"
-#include "evalenv.hpp"
+#include "memory.hpp"
 
 #include <string>
 #include <vector>
 #include <variant>
 #include <optional>
-
-namespace basic {
 
 // a class responsible for taking lexed tokens, parsing them, and passing their
 // result onto either the evalenv for indirect commands or the repl for direct
@@ -61,10 +59,8 @@ public:
      * @return: Returns an EvalResult containing either the message to print 
      * out to the console, or an error message.
      */
-    EvalResult eval(EvalEnv& env) const;
+    EvalResult eval(Memory& memory) const;
     // basic constructor for command
     Command(std::vector<lexer::Token>&& tokens)
         : tokens(std::move(tokens)) {}
 }; // End Class Command
-
-} // End namespace basic

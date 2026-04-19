@@ -13,7 +13,7 @@ namespace lexer {
  * @param line: The line that is currently being lexed.
  * @param index: The current index from lex_line.
  */
-std::variant<Token, LexResult::Err> lex_token(const std::string& line,
+std::variant<Token, LexResult::Err> lex_token(std::string_view line,
     size_t& index);
 
 }
