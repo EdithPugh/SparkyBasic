@@ -40,6 +40,7 @@ std::variant<Token, LexResult::Err> lex_string(
                 break;
             case '"':
                 str_literal.push_back('"');
+                break;
             default:
                 std::string err_msg;
                 err_msg.append(k_msg_unknown_backspace_sequence);
@@ -54,7 +55,7 @@ std::variant<Token, LexResult::Err> lex_string(
         }
         index++;
     } // end while (index < line.size() && line[index] != '"')
-    if (index < line.size()) {
+    if (index >= line.size()) {
         return LexResult::Err{
             std::string(k_msg_unexpected_eol_reading_string)
         };

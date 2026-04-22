@@ -8,12 +8,13 @@
 
 #include <vector>
 #include <cctype>
-#include <sstream>
 #include <string>
 #include <optional>
 #include <variant>
 
 namespace lexer {
+
+const size_t k_line_num_prealloc = 4;
 
 // helper function to eat line num
 std::optional<LexResult::Err> lex_line_num(std::string_view line,
@@ -71,15 +72,20 @@ std::optional<LexResult::Err> lex_line_num(std::string_view line,
         };
     }
     // eat linenum rq
-    std::stringstream line_num_stream;
+    std::string line_num_str;
+    line_num_str.reserve(k_line_num_prealloc);
     while (index < line.size() && std::isdigit(line[index])) {
-        line_num_stream << line[index];
+        line_num_str.push_back(line[index]);
         index++;
     }
-    std::string line_num_string = line_num_stream.str();
-    if (line_num_string.size() != 0) {
+    if (line[index] == '.') {
+        return LexResult::Err{
+            std::string(k_msg_line_num_non_int)
+        };
+    }
+    if (line_num_str.size() != 0) {
         // shouldn't throw, since it's just a string of digits
-        size_t line_num = std::stoul(line_num_string);
+        size_t line_num = std::stoul(line_num_str);
         tokens.push_back(Token::from_line_num(line_num));
     }
     return std::nullopt;

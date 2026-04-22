@@ -21,7 +21,7 @@ Token Token::from_line_num(size_t num) {
 Token Token::from_var_or_keyword(std::string&& id) {
     // whole loop should be optimized out with NDEBUG?
     for (auto& character: id) {
-        assert(std::isupper(character));
+        assert(std::isupper(character) || character == '$');
     }
     if (id == "NEW") { return from_mono(Token::KwNew).value(); }
     else if (id == "RUN") { return from_mono(Token::KwRun).value(); }

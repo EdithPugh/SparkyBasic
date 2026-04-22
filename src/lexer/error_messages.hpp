@@ -13,6 +13,8 @@ const std::string_view k_msg_line_num_leading_zero
     = "SN: Line numbers cannot have leading zeroes.";
 const std::string_view k_msg_line_num_negative
     = "SN: Line numbers cannot be negative.";
+const std::string_view k_msg_line_num_non_int
+    = "SN: Line numbers must be integers";
 const std::string_view k_msg_unexpected_eol_reading_string
     = "SN: Unexpected end of line while reading string";
 const std::string_view k_msg_unknown_backspace_sequence
