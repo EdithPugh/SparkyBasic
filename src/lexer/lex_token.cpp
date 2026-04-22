@@ -36,7 +36,7 @@ std::variant<Token, LexResult::Err> lex_token(std::string_view line,
     if (std::isdigit(line[index]) || line[index] == '.') {
         return lex_num(line, index);
     }
-    // match operator tokens
+    // match non-alphanumerical tokens
     switch (line[index]) {
     case '(': 
         index++;
@@ -47,6 +47,24 @@ std::variant<Token, LexResult::Err> lex_token(std::string_view line,
     case '=':
         index++;
         return Token::from_mono(Token::Equal).value();
+    case ',':
+        index++;
+        return Token::from_mono(Token::Comma).value();
+    case ';':
+        index++;
+        return Token::from_mono(Token::Semicolon).value();
+    case '+':
+        index++;
+        return Token::from_mono(Token::Add).value();
+    case '-':
+        index++;
+        return Token::from_mono(Token::Sub).value();
+    case '*':
+        index++;
+        return Token::from_mono(Token::Mul).value();
+    case '/':
+        index++;
+        return Token::from_mono(Token::Div).value();
     case '>':
         if (index + 1 >= line.size() || line[index + 1] != '=') {
             index++;

@@ -1,37 +1,43 @@
 // Defines the ostream operator overload for tokens
 
 #include "token.hpp"
+#include <string_view>
 
 namespace lexer {
 
-const std::string k_KwNew_str = "Kw.New";
-const std::string k_KwRun_str = "Kw.Run";
-const std::string k_KwList_str = "Kw.List";
-const std::string k_KwClear_str = "Kw.Clear";
-const std::string k_KwPrint_str = "Kw.Print";
-const std::string k_KwInput_str = "Kw.Input";
-const std::string k_KwLet_str = "Kw.Let";
-const std::string k_KwDim_str = "Kw.Dim";
-const std::string k_KwIf_str = "Kw.If";
-const std::string k_KwThen_str = "Kw.Then";
+const std::string_view k_KwNew_str = "Kw.New";
+const std::string_view k_KwRun_str = "Kw.Run";
+const std::string_view k_KwList_str = "Kw.List";
+const std::string_view k_KwClear_str = "Kw.Clear";
+const std::string_view k_KwPrint_str = "Kw.Print";
+const std::string_view k_KwInput_str = "Kw.Input";
+const std::string_view k_KwLet_str = "Kw.Let";
+const std::string_view k_KwDim_str = "Kw.Dim";
+const std::string_view k_KwIf_str = "Kw.If";
+const std::string_view k_KwThen_str = "Kw.Then";
 
-const std::string k_LineNum_str = "LINENUM";
-const std::string k_NumLiteral_str = "NUM";
-const std::string k_StrLiteral_str = "STR";
+const std::string_view k_LineNum_str = "LINENUM";
+const std::string_view k_NumLiteral_str = "NUM";
+const std::string_view k_StrLiteral_str = "STR";
 
-const std::string k_NumVar_str = "NUMVAR";
-const std::string k_StrVar_str = "STRVAR";
+const std::string_view k_NumVar_str = "NUMVAR";
+const std::string_view k_StrVar_str = "STRVAR";
 
-const std::string k_Semicolon_str = "';'";
-const std::string k_Comma_str = "','";
-const std::string k_Equal_str = "'='";
-const std::string k_GreaterThan_str = "'>'";
-const std::string k_LessThan_str = "'<'";
-const std::string k_NotEqualTo_str = "'<>'";
-const std::string k_LessThanOrEqualTo_str = "'<='";
-const std::string k_GreaterThanOrEqualTo_str = "'>='";
-const std::string k_OpenParen = "'('";
-const std::string k_CloseParen = "')'";
+const std::string_view k_Semicolon_str = "';'";
+const std::string_view k_Comma_str = "','";
+const std::string_view k_Equal_str = "'='";
+const std::string_view k_GreaterThan_str = "'>'";
+const std::string_view k_LessThan_str = "'<'";
+const std::string_view k_NotEqualTo_str = "'<>'";
+const std::string_view k_LessThanOrEqualTo_str = "'<='";
+const std::string_view k_GreaterThanOrEqualTo_str = "'>='";
+const std::string_view k_OpenParen_str = "'('";
+const std::string_view k_CloseParen_str = "')'";
+
+const std::string_view k_Add_str = "'+'";
+const std::string_view k_Sub_str = "'-'";
+const std::string_view k_Mul_str = "'*'";
+const std::string_view k_Div_str = "'/'";
 
 std::ostream& operator<<(std::ostream& os, const Token& token) {
     switch (token.type) {
@@ -91,8 +97,13 @@ std::ostream& operator<<(std::ostream& os, const Token& token) {
     case Token::NotEqualTo: os << k_NotEqualTo_str; break;
     case Token::LessThanOrEqualTo: os << k_LessThanOrEqualTo_str; break;
     case Token::GreaterThanOrEqualTo: os << k_GreaterThanOrEqualTo_str; break;
-    case Token::OpenParen: os << k_OpenParen; break;
-    case Token::CloseParen: os << k_CloseParen; break;
+    case Token::OpenParen: os << k_OpenParen_str; break;
+    case Token::CloseParen: os << k_CloseParen_str; break;
+
+    case Token::Add: os << k_Add_str; break;
+    case Token::Sub: os << k_Sub_str; break;
+    case Token::Mul: os << k_Mul_str; break;
+    case Token::Div: os << k_Div_str; break;
     }
     return os;
 }

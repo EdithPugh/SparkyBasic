@@ -68,9 +68,15 @@ public:
         LessThanOrEqualTo,
         GreaterThanOrEqualTo,
 
-        // Just used for indexing lists, as far as I can tell
+        // Used for indexing lists and grouping mathematical operations
         OpenParen,
         CloseParen,
+
+        // numerical operators
+        Add,
+        Sub,
+        Mul,
+        Div,
     };
 private:
     using ValueType = std::variant<
@@ -135,8 +141,7 @@ public:
      */
     static Token from_var_or_keyword(std::string&& id);
     /**
-     * The base constructor for tokens that are not literals, identifiers, or 
-     * line nums.
+     * The base constructor for tokens that do not contain a value.
      * @param new_type the type of the new token. must refer to a monostatic
      * type, i.e. not a literal, var name, or line number.
      * @return an optional that contains the new Token if param was valid.

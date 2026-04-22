@@ -12,8 +12,10 @@ namespace lexer {
  * it or a LexResult::Err. Called in a loop to lex an entire line.
  * @param line: The line that is currently being lexed.
  * @param index: The current index from lex_line.
+ * @return: returns a variant containing either a token or error
  */
-std::variant<Token, LexResult::Err> lex_token(std::string_view line,
+std::variant<Token, LexResult::Err> lex_token(
+    std::string_view line,
     size_t& index);
 
 }

@@ -37,9 +37,22 @@ LexResult lex_line(std::string_view line) {
             };
         }
     }
+
+    skip_whitespace(line, index);
+
     // now get to actual tokenizing
     while (index < line.size()) {
-        skip_whitespace(line, index);
+
+        if (line[index] == '\'') {
+            break;
+        }
+        if (index + 2 < line.size() &&
+            std::toupper(line[index]) == 'R'
+            && std::toupper(line[index+1]) == 'E'
+            && std::toupper(line[index+2]) == 'M'
+        ) {
+            break;
+        }
 
         auto token_result = lex_token(line, index);
         if (std::holds_alternative<Token>(token_result)) {
@@ -49,8 +62,6 @@ LexResult lex_line(std::string_view line) {
             return {std::get<LexResult::Err>(token_result)};
         }
 
-        // we have to do it twice, because lex_token can't return an empty
-        // token. That kinda sucks, so I should probably fix that.
         skip_whitespace(line, index);
     } // end while(index < line.size())
     return {
