@@ -4,7 +4,7 @@
  * File containing functions used to initialize the Interpreter.
  */
 
-#include "interpreter.hpp"
+#include "replgui.hpp"
 
 #include <wx/event.h>
 #include <wx/gdicmn.h>
@@ -25,7 +25,7 @@ enum MenuIDs {
     ID_New,
 };
 
-Interpreter::Interpreter(void)
+ReplGui::ReplGui(void)
     : wxFrame(nullptr, wxID_ANY, k_app_name)
 {
     // call member functions to setup menus
@@ -67,7 +67,7 @@ Interpreter::Interpreter(void)
         wxDefaultSize,
         wxTE_PROCESS_ENTER
     );
-    entry_box->Bind(wxEVT_TEXT_ENTER, &Interpreter::send_command, this);
+    entry_box->Bind(wxEVT_TEXT_ENTER, &ReplGui::on_enter, this);
     entry_sizer = new wxBoxSizer(wxHORIZONTAL);
     entry_sizer->Add(entry_box, 1, wxEXPAND);
 
@@ -81,7 +81,7 @@ Interpreter::Interpreter(void)
     SetSize(k_default_win_size_x, k_default_win_size_y);
 } // end MyFrame::MyFrame
 
-void Interpreter::setup_file_menu(void) {
+void ReplGui::setup_file_menu(void) {
     menu_file = new wxMenu();
     menu_file->Append(
         ID_New,
@@ -122,7 +122,7 @@ void Interpreter::setup_file_menu(void) {
     );
 }
 
-void Interpreter::setup_help_menu(void) {
+void ReplGui::setup_help_menu(void) {
     menu_help = new wxMenu();
 
     menu_help->Append(

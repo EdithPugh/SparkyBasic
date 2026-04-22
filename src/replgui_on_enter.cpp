@@ -1,6 +1,6 @@
 // By Edith Pugh on 2026-04-21
 
-#include "interpreter.hpp"
+#include "replgui.hpp"
 
 #include "lexer/lex_line.hpp"
 
@@ -9,7 +9,7 @@
 #include <variant>
 #include <sstream>
 
-void Interpreter::send_command(wxCommandEvent& evt) {
+void ReplGui::on_enter(wxCommandEvent& evt) {
     (void)evt;
     std::string line = entry_box->GetValue().ToAscii('?').data();
     

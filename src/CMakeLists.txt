@@ -29,8 +29,8 @@ set(CMAKE_CXX_STANDARD 17)
 target_sources(${PROJECT_NAME}
     PRIVATE
     main.cpp
-    interpreter_new.cpp
-    send_command.cpp
+    replgui_init.cpp
+    replgui_on_enter.cpp
     command.cpp
 )
 add_subdirectory(lexer)
