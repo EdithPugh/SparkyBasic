@@ -10,7 +10,14 @@ find_package(wxWidgets REQUIRED COMPONENTS core base)
 include(${wxWidgets_USE_FILE})
 
 add_executable(${PROJECT_NAME} )
-target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Werror -Wextra -Wpedantic)
+target_compile_options(${PROJECT_NAME}
+    PRIVATE
+    -Wall
+    -Werror
+    -Wextra
+    -Wpedantic
+    -g -O0 -D_GLIBCXX_DEBUG
+)
 target_link_libraries(${PROJECT_NAME}
     PRIVATE 
     ${wxWidgets_LIBRARIES}
@@ -22,7 +29,8 @@ set(CMAKE_CXX_STANDARD 17)
 target_sources(${PROJECT_NAME}
     PRIVATE
     main.cpp
-    myframe.cpp
+    interpreter_new.cpp
+    send_command.cpp
     command.cpp
 )
 add_subdirectory(lexer)

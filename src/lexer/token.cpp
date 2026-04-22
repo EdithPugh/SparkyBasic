@@ -5,7 +5,6 @@
 
 #include "token.hpp"
 
-#include <sstream>
 #include <variant>
 
 namespace lexer {
@@ -20,6 +19,10 @@ Token Token::from_line_num(size_t num) {
     return Token(Token::LineNum, num);
 }
 Token Token::from_var_or_keyword(std::string&& id) {
+    // whole loop should be optimized out with NDEBUG?
+    for (auto& character: id) {
+        assert(std::isupper(character));
+    }
     if (id == "NEW") { return from_mono(Token::KwNew).value(); }
     else if (id == "RUN") { return from_mono(Token::KwRun).value(); }
     else if (id == "LIST") { return from_mono(Token::KwList).value(); }
@@ -31,10 +34,10 @@ Token Token::from_var_or_keyword(std::string&& id) {
     else if (id == "IF") { return from_mono(Token::KwIf).value(); }
     else if (id == "THEN") { return from_mono(Token::KwThen).value(); }
     else if (id[id.size()-1] == '$') {
-        return Token(Token::NumVar, id);
+        return Token(Token::StrVar, id);
     }
     else {
-        return Token(Token::StrVar, id);
+        return Token(Token::NumVar, id);
     }
 }
 

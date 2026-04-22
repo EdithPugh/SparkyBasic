@@ -1,24 +1,21 @@
 // By Edith Pugh on 2026-April-10, Sparky's third birthday.
 
-#include "myframe.hpp"
+#include "interpreter.hpp"
 
 #include <wx/wx.h>
 
-// These names like MyApp, MyPanel, etc aren't very descriptive but I can't
-// think of any better ways to describe them that aren't kinda verbose like
-// SparkyBasicApp (which would also make autocomplete p much useless)
-class MyApp : public wxApp {
+class InterpreterApp : public wxApp {
 public:
     bool OnInit() override;
 
-    MyFrame* frame;
+    Interpreter* interpreter;
 };
 
-bool MyApp::OnInit() {
+bool InterpreterApp::OnInit() {
     // wxWidgets sucks so we can't use unique_ptr.
-    frame = new MyFrame();
-    frame->Show();
+    interpreter = new Interpreter();
+    interpreter->Show();
     return true;
-} // end MyApp::OnInit
+} // end InterpreterApp::OnInit
 
-wxIMPLEMENT_APP(MyApp);
+wxIMPLEMENT_APP(InterpreterApp);

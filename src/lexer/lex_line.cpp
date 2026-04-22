@@ -20,9 +20,14 @@ std::optional<LexResult::Err> lex_line_num(std::string_view line,
     size_t& index,
     std::vector<Token>& tokens);
 
+void skip_whitespace(std::string_view line, size_t& index);
+
 LexResult lex_line(std::string_view line) {
     std::vector<Token> tokens;
     size_t index = 0;
+
+    skip_whitespace(line, index);
+
     { // run line num
         auto opt_result = lex_line_num(line, index, tokens);
         if (opt_result.has_value()) {
@@ -33,6 +38,8 @@ LexResult lex_line(std::string_view line) {
     }
     // now get to actual tokenizing
     while (index < line.size()) {
+        skip_whitespace(line, index);
+
         auto token_result = lex_token(line, index);
         if (std::holds_alternative<Token>(token_result)) {
             tokens.push_back(std::get<Token>(token_result));
@@ -40,6 +47,10 @@ LexResult lex_line(std::string_view line) {
         else {
             return {std::get<LexResult::Err>(token_result)};
         }
+
+        // we have to do it twice, because lex_token can't return an empty
+        // token. That kinda sucks, so I should probably fix that.
+        skip_whitespace(line, index);
     } // end while(index < line.size())
     return {
         LexResult::Ok{tokens}
@@ -49,15 +60,15 @@ LexResult lex_line(std::string_view line) {
 std::optional<LexResult::Err> lex_line_num(std::string_view line,
     size_t& index,
     std::vector<Token>& tokens) {
-    // skip initial whitespace to allow for indentation
-    while (std::isspace(line[index])) {
-        index++;
-    }
     if (line[index] == '0') {
-        return LexResult::Err{k_msg_line_num_leading_zero};
+        return LexResult::Err{
+            std::string(k_msg_line_num_leading_zero)
+        };
     }
     if (line[index] == '-') {
-        return LexResult::Err{k_msg_line_num_negative};
+        return LexResult::Err{
+            std::string(k_msg_line_num_negative)
+        };
     }
     // eat linenum rq
     std::stringstream line_num_stream;
@@ -72,6 +83,12 @@ std::optional<LexResult::Err> lex_line_num(std::string_view line,
         tokens.push_back(Token::from_line_num(line_num));
     }
     return std::nullopt;
+}
+
+void skip_whitespace(std::string_view line, size_t& index) {
+    while (index < line.size() && std::isspace(line[index])) {
+        index++;
+    }
 }
 
 }

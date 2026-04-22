@@ -7,8 +7,7 @@
 #include "lex_literals.hpp"
 
 #include <variant>
-#include <string>
-#include <sstream>
+#include <string_view>
 
 namespace lexer {
 
@@ -17,18 +16,17 @@ std::variant<Token, LexResult::Err> lex_token(std::string_view line,
     size_t& index) {
     // match identifiers
     if (std::isalpha(line[index])) {
-        std::stringstream id;
-        id << std::toupper(line[index]);
+        std::string id;
         while (index < line.size() && std::isalpha(line[index])) {
-            id << std::toupper(line[index]);
+            id.push_back(std::toupper(line[index]));
             index++;
         }
         // eat string sign, if there is one
         if (index < line.size() && line[index] == '$') {
-            id << line[index];
+            id.push_back('$');
             index++;
         }
-        return Token::from_var_or_keyword(id.str());
+        return Token::from_var_or_keyword(std::move(id));
     }
     // match string
     if (line[index] == '"') {
@@ -72,10 +70,10 @@ std::variant<Token, LexResult::Err> lex_token(std::string_view line,
     default:
         // since literal and keyword functions already return, this means that
         // there must be an unknown token. Uh oh!
-        std::stringstream err_msg;
-        err_msg << k_msg_unknown_token;
-        err_msg << line[index];
-        return LexResult::Err{err_msg.str()};
+        std::string err_msg;
+        err_msg.append(k_msg_unknown_token);
+        err_msg.push_back(line[index]);
+        return LexResult::Err{err_msg};
     } // end switch(line[index])
 }
 

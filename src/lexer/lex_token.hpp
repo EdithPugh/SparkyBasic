@@ -1,7 +1,7 @@
 #pragma once
 // By Edith Pugh on 2026-04-14
 
-#include <string>
+#include <string_view>
 
 #include "lex_line.hpp"
 
