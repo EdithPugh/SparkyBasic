@@ -31,6 +31,5 @@ target_sources(${PROJECT_NAME}
     main.cpp
     replgui_init.cpp
     replgui_on_enter.cpp
-    command.cpp
 )
 add_subdirectory(lexer)
