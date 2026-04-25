@@ -3,6 +3,7 @@
 #include "replgui.hpp"
 
 #include "lexer/lex_line.hpp"
+#include "command.hpp"
 
 #include <wx/wx.h>
 
@@ -30,6 +31,7 @@ void ReplGui::on_enter(wxCommandEvent& evt) {
                 *output_box << ", ";
             }
         }
+        Command cmd = Command{ std::move(tokens) };
     }
 
     *output_box << "\n";

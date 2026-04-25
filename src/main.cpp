@@ -4,9 +4,10 @@
 
 #include <wx/wx.h>
 
+// NOLINTNEXTLINE(cppcoreguidelines-pro-type-member-init)
 class InterpreterApp : public wxApp {
 public:
-    bool OnInit() override;
+    auto OnInit() -> bool override;
 
     ReplGui* gui;
 };

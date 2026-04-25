@@ -56,8 +56,8 @@ public:
     void set_num_var(std::string_view name, int value);
     void set_str_var(std::string_view name, std::string value);
 
-    std::optional<int> get_num_var(std::string_view name);
-    std::optional<std::string_view> get_str_var(std::string_view name);
+    std::optional<int> get_num_var(std::string_view name) const;
+    std::optional<std::string_view> get_str_var(std::string_view name) const;
 
     /**
      * Execute a direct command within the Interpreter's current state.

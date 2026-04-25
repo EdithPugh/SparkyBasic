@@ -29,13 +29,8 @@ LexResult lex_line(std::string_view line) {
 
     skip_whitespace(line, index);
 
-    { // run line num
-        auto opt_result = lex_line_num(line, index, tokens);
-        if (opt_result.has_value()) {
-            return {
-                opt_result.value()
-            };
-        }
+    if (auto error = lex_line_num(line, index, tokens)) {
+        return { LexResult::Err{*error} };
     }
 
     skip_whitespace(line, index);

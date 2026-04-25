@@ -23,16 +23,16 @@ Token Token::from_var_or_keyword(std::string&& id) {
     for (auto& character: id) {
         assert(std::isupper(character) || character == '$');
     }
-    if (id == "NEW") { return from_mono(Token::KwNew).value(); }
-    else if (id == "RUN") { return from_mono(Token::KwRun).value(); }
-    else if (id == "LIST") { return from_mono(Token::KwList).value(); }
-    else if (id == "CLEAR") { return from_mono(Token::KwClear).value(); }
-    else if (id == "PRINT") { return from_mono(Token::KwPrint).value(); }
-    else if (id == "INPUT") { return from_mono(Token::KwInput).value(); }
-    else if (id == "LET") { return from_mono(Token::KwLet).value(); }
-    else if (id == "DIM") { return from_mono(Token::KwDim).value(); }
-    else if (id == "IF") { return from_mono(Token::KwIf).value(); }
-    else if (id == "THEN") { return from_mono(Token::KwThen).value(); }
+    if      (id == "NEW")   { return *from_mono(Token::KwNew); }
+    else if (id == "RUN")   { return *from_mono(Token::KwRun); }
+    else if (id == "LIST")  { return *from_mono(Token::KwList); }
+    else if (id == "CLEAR") { return *from_mono(Token::KwClear); }
+    else if (id == "PRINT") { return *from_mono(Token::KwPrint); }
+    else if (id == "INPUT") { return *from_mono(Token::KwInput); }
+    else if (id == "LET")   { return *from_mono(Token::KwLet); }
+    else if (id == "DIM")   { return *from_mono(Token::KwDim); }
+    else if (id == "IF")    { return *from_mono(Token::KwIf); }
+    else if (id == "THEN")  { return *from_mono(Token::KwThen); }
     else if (id[id.size()-1] == '$') {
         return Token(Token::StrVar, id);
     }

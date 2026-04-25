@@ -84,13 +84,13 @@ std::variant<Token, LexResult::Err> lex_num(
     try {
         return Token::from_literal(std::stod(num_literal));
     }
-    catch (std::invalid_argument) {
+    catch (std::invalid_argument&) {
         std::string err_msg;
         err_msg.append(k_msg_malformed_num_literal);
         err_msg.append(num_literal);
         return LexResult::Err{err_msg};
     }
-    catch (std::out_of_range) {
+    catch (std::out_of_range&) {
         std::string err_msg;
         err_msg.append(k_msg_num_literal_out_of_range);
         err_msg.append(num_literal);

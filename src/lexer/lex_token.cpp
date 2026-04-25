@@ -40,50 +40,50 @@ std::variant<Token, LexResult::Err> lex_token(std::string_view line,
     switch (line[index]) {
     case '(': 
         index++;
-        return Token::from_mono(Token::OpenParen).value();
+        return *Token::from_mono(Token::OpenParen);
     case ')':
         index++; 
-        return Token::from_mono(Token::CloseParen).value();
+        return *Token::from_mono(Token::CloseParen);
     case '=':
         index++;
-        return Token::from_mono(Token::Equal).value();
+        return *Token::from_mono(Token::Equal);
     case ',':
         index++;
-        return Token::from_mono(Token::Comma).value();
+        return *Token::from_mono(Token::Comma);
     case ';':
         index++;
-        return Token::from_mono(Token::Semicolon).value();
+        return *Token::from_mono(Token::Semicolon);
     case '+':
         index++;
-        return Token::from_mono(Token::Add).value();
+        return *Token::from_mono(Token::Add);
     case '-':
         index++;
-        return Token::from_mono(Token::Sub).value();
+        return *Token::from_mono(Token::Sub);
     case '*':
         index++;
-        return Token::from_mono(Token::Mul).value();
+        return *Token::from_mono(Token::Mul);
     case '/':
         index++;
-        return Token::from_mono(Token::Div).value();
+        return *Token::from_mono(Token::Div);
     case '>':
         if (index + 1 >= line.size() || line[index + 1] != '=') {
             index++;
-            return Token::from_mono(Token::GreaterThan).value();
+            return *Token::from_mono(Token::GreaterThan);
         } else {
             index += 2;
-            return Token::from_mono(Token::GreaterThanOrEqualTo).value();
+            return *Token::from_mono(Token::GreaterThanOrEqualTo);
         }
     case '<':
         if (index + 1 >= line.size()
             || (line[index + 1] != '=' && line[index + 1] != '>')) {
             index++;
-            return Token::from_mono(Token::LessThan).value();
+            return *Token::from_mono(Token::LessThan);
         } else if (line[index + 1] == '>') {
             index += 2;
-            return Token::from_mono(Token::NotEqualTo).value();
+            return *Token::from_mono(Token::NotEqualTo);
         } else {
             index += 2;
-            return Token::from_mono(Token::LessThanOrEqualTo).value();
+            return *Token::from_mono(Token::LessThanOrEqualTo);
         }
     default:
         // since literal and keyword functions already return, this means that
