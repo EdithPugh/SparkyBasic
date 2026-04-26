@@ -1,0 +1,12 @@
+{
+    Checks: [
+        '-*',
+        'bugprone-*',
+        'cppcoreguidelines-*',
+        'clang-analyzer-*',
+        'clang-diagnostics-*',
+        'modernize-*',
+        'readability-*',
+    ]
+    WarningsAsErrors: '*'
+}

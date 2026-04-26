@@ -14,7 +14,8 @@ public:
 
 auto SparkyBasicApp::OnInit() -> bool {
     // wxWidgets sucks so we can't use unique_ptr.
-    gui = new ReplGui();
+    // gui is automatically freed by wxWidgets.
+    gui = new ReplGui(); // NOLINT(cppcoreguidelines-owning-memory)
     gui->Show();
     return true;
 } // end InterpreterApp::OnInit

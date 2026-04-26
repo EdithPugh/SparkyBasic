@@ -82,7 +82,7 @@ ReplGui::ReplGui()
 } // end MyFrame::MyFrame
 
 auto setup_file_menu() -> wxMenu* {
-    auto* menu_file = new wxMenu();
+    auto* menu_file = new wxMenu(); // NOLINT(cppcoreguidelines-owning-memory)
     menu_file->Append(
         ID_New,
         "&New\tCtrl-N",
@@ -124,7 +124,7 @@ auto setup_file_menu() -> wxMenu* {
 }
 
 auto setup_help_menu() -> wxMenu* {
-    auto* menu_help = new wxMenu();
+    auto* menu_help = new wxMenu(); // NOLINT(cppcoreguidelines-owning-memory)
 
     menu_help->Append(
         ID_Help,

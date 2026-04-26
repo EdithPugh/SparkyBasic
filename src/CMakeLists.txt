@@ -1,25 +1,10 @@
 cmake_minimum_required(VERSION 3.28)
 find_program(CLANG_TIDY "clang-tidy")
 
-set(CLANG_TIDY_CHECKS
-"--checks=\
--*,\
-bugprone-*,\
-cppcoreguidelines-*,\
-clang-analyzer-*,\
-modernize-*,\
-readability-*,\
-clang-diagnostics-*,\
--cppcoreguidelines-owning-memory\
- -warnings-as-errors=*
-"
-)
-
 if(CLANG_TIDY)
     message(STATUS "clang-tidy found at \"${CLANG_TIDY}\".")
     set(CMAKE_CXX_CLANG_TIDY
-        ${CLANG_TIDY}
-        ${CLANG_TIDY_CHECKS}
+        ${CLANG_TIDY} -p build
     )
 else()
     message(WARNING "clang-tidy not found.")
