@@ -5,19 +5,18 @@
 #include <wx/wx.h>
 
 // NOLINTNEXTLINE(cppcoreguidelines-pro-type-member-init)
-class InterpreterApp : public wxApp {
+class SparkyBasicApp : public wxApp {
 public:
     auto OnInit() -> bool override;
 
     ReplGui* gui;
 };
 
-auto InterpreterApp::OnInit() -> bool {
+auto SparkyBasicApp::OnInit() -> bool {
     // wxWidgets sucks so we can't use unique_ptr.
-    // NOLINTNEXTLINE(cppcoreguidelines-owning-memory)
     gui = new ReplGui();
     gui->Show();
     return true;
 } // end InterpreterApp::OnInit
 
-wxIMPLEMENT_APP(InterpreterApp);
+wxIMPLEMENT_APP(SparkyBasicApp);

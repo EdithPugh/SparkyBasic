@@ -11,6 +11,7 @@ modernize-*,\
 readability-*,\
 clang-diagnostics-*,\
 -cppcoreguidelines-owning-memory\
+ -warnings-as-errors=*
 "
 )
 
