@@ -91,7 +91,7 @@ auto lex_line_num(std::string_view line,
             std::string(k_msg_line_num_non_int)
         };
     }
-    if (line_num_str.empty()) {
+    if (!line_num_str.empty()) {
         // shouldn't throw, since it's just a string of digits
         size_t line_num = std::stoul(line_num_str);
         tokens.push_back(Token::from_line_num(line_num));
