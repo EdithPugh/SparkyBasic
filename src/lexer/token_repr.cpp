@@ -39,73 +39,73 @@ const std::string_view k_Sub_str = "'-'";
 const std::string_view k_Mul_str = "'*'";
 const std::string_view k_Div_str = "'/'";
 
-std::ostream& operator<<(std::ostream& os, const Token& token) {
+auto operator<<(std::ostream& stream, const Token& token) -> std::ostream& {
     switch (token.type) {
-    case Token::KwNew: os << k_KwNew_str; break;
-    case Token::KwRun: os << k_KwRun_str; break;
-    case Token::KwList: os << k_KwList_str; break;
-    case Token::KwClear: os << k_KwClear_str; break;
-    case Token::KwPrint: os << k_KwPrint_str; break;
-    case Token::KwInput: os << k_KwInput_str; break;
-    case Token::KwLet: os << k_KwLet_str; break;
-    case Token::KwDim: os << k_KwDim_str; break;
-    case Token::KwIf: os << k_KwIf_str; break;
-    case Token::KwThen: os << k_KwThen_str; break;
+    case Token::KwNew: stream << k_KwNew_str; break;
+    case Token::KwRun: stream << k_KwRun_str; break;
+    case Token::KwList: stream << k_KwList_str; break;
+    case Token::KwClear: stream << k_KwClear_str; break;
+    case Token::KwPrint: stream << k_KwPrint_str; break;
+    case Token::KwInput: stream << k_KwInput_str; break;
+    case Token::KwLet: stream << k_KwLet_str; break;
+    case Token::KwDim: stream << k_KwDim_str; break;
+    case Token::KwIf: stream << k_KwIf_str; break;
+    case Token::KwThen: stream << k_KwThen_str; break;
     
     case Token::LineNum: {
-        os << k_LineNum_str;
-        os << '(';
-        os << std::get<size_t>(token.value);
-        os << ')';
+        stream << k_LineNum_str;
+        stream << '(';
+        stream << std::get<size_t>(token.value);
+        stream << ')';
         break;
     }
     case Token::NumLiteral: {
-        os << k_NumLiteral_str;
-        os << '(';
-        os << std::get<double>(token.value);
-        os << ')';
+        stream << k_NumLiteral_str;
+        stream << '(';
+        stream << std::get<double>(token.value);
+        stream << ')';
         break;
     }
     case Token::StrLiteral: {
-        os << k_StrLiteral_str;
-        os << '(';
-        os << std::get<std::string>(token.value);
-        os << ')';
+        stream << k_StrLiteral_str;
+        stream << '(';
+        stream << std::get<std::string>(token.value);
+        stream << ')';
         break;
     }
     
     case Token::NumVar: {
-        os << k_NumVar_str;
-        os << '(';
-        os << std::get<std::string>(token.value);
-        os << ')';
+        stream << k_NumVar_str;
+        stream << '(';
+        stream << std::get<std::string>(token.value);
+        stream << ')';
         break;
     }
     case Token::StrVar: {
-        os << k_StrVar_str;
-        os << '(';
-        os << std::get<std::string>(token.value);
-        os << ')';
+        stream << k_StrVar_str;
+        stream << '(';
+        stream << std::get<std::string>(token.value);
+        stream << ')';
         break;
     }
     
-    case Token::Semicolon: os << k_Semicolon_str; break;
-    case Token::Comma: os << k_Comma_str; break;
-    case Token::Equal: os << k_Equal_str; break;
-    case Token::GreaterThan: os << k_GreaterThan_str; break;
-    case Token::LessThan: os << k_LessThan_str; break;
-    case Token::NotEqualTo: os << k_NotEqualTo_str; break;
-    case Token::LessThanOrEqualTo: os << k_LessThanOrEqualTo_str; break;
-    case Token::GreaterThanOrEqualTo: os << k_GreaterThanOrEqualTo_str; break;
-    case Token::OpenParen: os << k_OpenParen_str; break;
-    case Token::CloseParen: os << k_CloseParen_str; break;
+    case Token::Semicolon: stream << k_Semicolon_str; break;
+    case Token::Comma: stream << k_Comma_str; break;
+    case Token::Equal: stream << k_Equal_str; break;
+    case Token::GreaterThan: stream << k_GreaterThan_str; break;
+    case Token::LessThan: stream << k_LessThan_str; break;
+    case Token::NotEqualTo: stream << k_NotEqualTo_str; break;
+    case Token::LessThanOrEqualTo: stream << k_LessThanOrEqualTo_str; break;
+    case Token::GreaterThanOrEqualTo: stream << k_GreaterThanOrEqualTo_str; break;
+    case Token::OpenParen: stream << k_OpenParen_str; break;
+    case Token::CloseParen: stream << k_CloseParen_str; break;
 
-    case Token::Add: os << k_Add_str; break;
-    case Token::Sub: os << k_Sub_str; break;
-    case Token::Mul: os << k_Mul_str; break;
-    case Token::Div: os << k_Div_str; break;
+    case Token::Add: stream << k_Add_str; break;
+    case Token::Sub: stream << k_Sub_str; break;
+    case Token::Mul: stream << k_Mul_str; break;
+    case Token::Div: stream << k_Div_str; break;
     }
-    return os;
+    return stream;
 }
 
 }

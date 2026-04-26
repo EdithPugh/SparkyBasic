@@ -14,8 +14,9 @@ namespace lexer {
 const size_t k_num_literal_prealloc = 20;
 const size_t k_str_literal_prealloc = 20;
 
-std::variant<Token, LexResult::Err> lex_string(
-    std::string_view line, size_t& index) {
+auto lex_string(
+    std::string_view line, size_t& index)
+    -> std::variant<Token, LexResult::Err> {
     assert(line[index] == '"');
     index++;
     std::string str_literal;
@@ -65,15 +66,18 @@ std::variant<Token, LexResult::Err> lex_string(
     return Token::from_literal(std::move(str_literal));
 }
 
-bool is_num_component(char com) {
-    return std::isdigit(com) || com == '.' || std::toupper(com) == 'E';
+auto is_num_component(char character) -> bool {
+    return std::isdigit(character) != 0
+        || character == '.'
+        || (char)std::toupper(character) == 'E';
 }
 
 // match numbers, initial + or - is not included as those are handled by
 // the parser
-std::variant<Token, LexResult::Err> lex_num(
-    std::string_view line, size_t& index) {
-    assert(std::isdigit(line[index]) || line[index] == '.');
+auto lex_num(
+    std::string_view line, size_t& index)
+    -> std::variant<Token, LexResult::Err> {
+    assert(std::isdigit(line[index]) != 0 || line[index] == '.');
     std::string num_literal;
     num_literal.reserve(k_num_literal_prealloc);
 

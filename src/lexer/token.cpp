@@ -9,70 +9,69 @@
 
 namespace lexer {
 
-Token Token::from_literal(double num) {
-    return Token(Token::NumLiteral, num);
+auto Token::from_literal(double num) -> Token {
+    return { Token::NumLiteral, num };
 }
-Token Token::from_literal(std::string&& str) {
-    return Token(Token::StrLiteral, str);
+auto Token::from_literal(std::string&& str) -> Token {
+    return { Token::StrLiteral, std::move(str) };
 }
-Token Token::from_line_num(size_t num) {
-    return Token(Token::LineNum, num);
+auto Token::from_line_num(size_t num) -> Token {
+    return { Token::LineNum, num };
 }
-Token Token::from_var_or_keyword(std::string&& id) {
+auto Token::from_var_or_keyword(std::string&& identifier) -> Token {
     // whole loop should be optimized out with NDEBUG?
-    for (auto& character: id) {
+    for (auto& character: identifier) {
         assert(std::isupper(character) || character == '$');
     }
-    if      (id == "NEW")   { return *from_mono(Token::KwNew); }
-    else if (id == "RUN")   { return *from_mono(Token::KwRun); }
-    else if (id == "LIST")  { return *from_mono(Token::KwList); }
-    else if (id == "CLEAR") { return *from_mono(Token::KwClear); }
-    else if (id == "PRINT") { return *from_mono(Token::KwPrint); }
-    else if (id == "INPUT") { return *from_mono(Token::KwInput); }
-    else if (id == "LET")   { return *from_mono(Token::KwLet); }
-    else if (id == "DIM")   { return *from_mono(Token::KwDim); }
-    else if (id == "IF")    { return *from_mono(Token::KwIf); }
-    else if (id == "THEN")  { return *from_mono(Token::KwThen); }
-    else if (id[id.size()-1] == '$') {
-        return Token(Token::StrVar, id);
+    if (identifier == "NEW")   { return from_mono(Token::KwNew); }
+    if (identifier == "RUN")   { return from_mono(Token::KwRun); }
+    if (identifier == "LIST")  { return from_mono(Token::KwList); }
+    if (identifier == "CLEAR") { return from_mono(Token::KwClear); }
+    if (identifier == "PRINT") { return from_mono(Token::KwPrint); }
+    if (identifier == "INPUT") { return from_mono(Token::KwInput); }
+    if (identifier == "LET")   { return from_mono(Token::KwLet); }
+    if (identifier == "DIM")   { return from_mono(Token::KwDim); }
+    if (identifier == "IF")    { return from_mono(Token::KwIf); }
+    if (identifier == "THEN")  { return from_mono(Token::KwThen); }
+
+    if (identifier[identifier.size()-1] == '$') {
+        return { Token::StrVar, std::move(identifier) };
     }
-    else {
-        return Token(Token::NumVar, id);
-    }
+    return { Token::NumVar, std::move(identifier) };
 }
 
-std::optional<Token> Token::from_mono(Type new_type) {
+auto Token::from_mono(Type new_type) -> Token {
     switch (new_type) {
     case NumVar:
     case StrVar:
     case NumLiteral:
     case StrLiteral:
     case LineNum:
-        return std::nullopt;
+        assert(0);
     default:
-        return Token(new_type, std::monostate());
+        return { new_type, std::monostate() };
     }
 }
 
-std::optional<std::string_view> Token::get_var_name(void) const {
+auto Token::get_var_name() const -> std::optional<std::string_view> {
     if (type == NumVar || type == StrVar) {
         return std::get<std::string>(value);
     }
     return std::nullopt;
 }
-std::optional<std::string_view> Token::get_string(void) const {
+auto Token::get_string() const -> std::optional<std::string_view> {
     if (type == StrLiteral) {
         return std::get<std::string>(value);
     }
     return std::nullopt;
 }
-std::optional<double> Token::get_number(void) const {
+auto Token::get_number() const -> std::optional<double> {
     if (type == NumLiteral) {
         return std::get<double>(value);
     }
     return std::nullopt;
 }
-std::optional<size_t> Token::get_line_num(void) const {
+auto Token::get_line_num() const -> std::optional<size_t> {
     if (type == LineNum) {
         return std::get<size_t>(value);
     }

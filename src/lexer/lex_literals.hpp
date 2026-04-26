@@ -16,8 +16,9 @@ namespace lexer {
  * LexResult::Err to be passed back to the original caller.
  * @exception: assert failure if line[index] is not a quote
  */
-std::variant<Token, LexResult::Err> lex_string(
-    std::string_view line, size_t& index);
+auto lex_string(
+    std::string_view line, size_t& index)
+    -> std::variant<Token, LexResult::Err>;
 
 /**
  * A helper function for use by lex_token that eats a number.
@@ -28,7 +29,8 @@ std::variant<Token, LexResult::Err> lex_string(
  * LexResult::Err to be passed back to the original caller.
  * @exception: assert failure if line[index] is not either a number or period.
  */
-std::variant<Token, LexResult::Err> lex_num(
-    std::string_view line, size_t& index);
+auto lex_num(
+    std::string_view line, size_t& index)
+    -> std::variant<Token, LexResult::Err>;
 
 }

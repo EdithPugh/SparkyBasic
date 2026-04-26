@@ -8,6 +8,7 @@
 
 #include <wx/event.h>
 #include <wx/gdicmn.h>
+#include <wx/sizer.h>
 #include <wx/wx.h>
 
 const char * const k_app_name = "SparkyBasic PREALPHA";
@@ -25,15 +26,34 @@ enum MenuIDs {
     ID_New,
 };
 
-ReplGui::ReplGui(void)
-    : wxFrame(nullptr, wxID_ANY, k_app_name)
-{
-    // call member functions to setup menus
-    setup_file_menu();
-    setup_help_menu();
+auto setup_file_menu() -> wxMenu*;
+auto setup_help_menu() -> wxMenu*;
 
-    // Add menu bar to frame
-    wxMenuBar* menu_bar = new wxMenuBar;
+ReplGui::ReplGui()
+    : wxFrame(nullptr, wxID_ANY, k_app_name)
+    , menu_bar (new wxMenuBar)
+    , menu_file(setup_file_menu())
+    , menu_help(setup_help_menu())
+    , sizer(new wxBoxSizer(wxVERTICAL))
+    , output_box(new wxTextCtrl(
+        this,
+        wxID_ANY,
+        "",
+        wxDefaultPosition,
+        wxDefaultSize,
+        wxTE_MULTILINE | wxTE_READONLY | wxTE_CHARWRAP
+    ))
+    , output_sizer(new wxBoxSizer(wxHORIZONTAL))
+    , entry_box(new wxTextCtrl(
+        this, 
+        wxID_ANY,
+        "",
+        wxDefaultPosition,
+        wxDefaultSize,
+        wxTE_PROCESS_ENTER
+    ))
+    , entry_sizer(new wxBoxSizer(wxHORIZONTAL))
+{
     menu_bar->Append(menu_file, "&File");
     menu_bar->Append(menu_help, "&Help");
     SetMenuBar(menu_bar);
@@ -46,33 +66,13 @@ ReplGui::ReplGui(void)
     Bind(wxEVT_MENU, TODO_REPLACE_ME, ID_Load);
     Bind(wxEVT_MENU, TODO_REPLACE_ME, ID_Help);
 
-    // create the output box
-    output_box = new wxTextCtrl(
-        this,
-        wxID_ANY,
-        "",
-        wxDefaultPosition,
-        wxDefaultSize,
-        wxTE_MULTILINE | wxTE_READONLY | wxTE_CHARWRAP
-    );
-    output_sizer = new wxBoxSizer(wxHORIZONTAL);
     output_sizer->Add(output_box, 1, wxEXPAND);
 
-    // create the entry box
-    entry_box = new wxTextCtrl(
-        this, 
-        wxID_ANY,
-        "",
-        wxDefaultPosition,
-        wxDefaultSize,
-        wxTE_PROCESS_ENTER
-    );
     entry_box->Bind(wxEVT_TEXT_ENTER, &ReplGui::on_enter, this);
-    entry_sizer = new wxBoxSizer(wxHORIZONTAL);
+
     entry_sizer->Add(entry_box, 1, wxEXPAND);
 
     // add both the entry box and output box into the main vertical sizer
-    sizer = new wxBoxSizer(wxVERTICAL);
     sizer->Add(output_sizer, 1, wxEXPAND);
     sizer->Add(entry_sizer, 0, wxEXPAND);
     SetSizerAndFit(sizer);
@@ -81,8 +81,8 @@ ReplGui::ReplGui(void)
     SetSize(k_default_win_size_x, k_default_win_size_y);
 } // end MyFrame::MyFrame
 
-void ReplGui::setup_file_menu(void) {
-    menu_file = new wxMenu();
+auto setup_file_menu() -> wxMenu* {
+    auto* menu_file = new wxMenu();
     menu_file->Append(
         ID_New,
         "&New\tCtrl-N",
@@ -120,14 +120,16 @@ void ReplGui::setup_file_menu(void) {
         "&Exit SparkyBasic\tCtrl-Q",
         "Exit SparkyBasic without saving."
     );
+    return menu_file;
 }
 
-void ReplGui::setup_help_menu(void) {
-    menu_help = new wxMenu();
+auto setup_help_menu() -> wxMenu* {
+    auto* menu_help = new wxMenu();
 
     menu_help->Append(
         ID_Help,
         "&Help\tCtrl-H",
         "Open help dialogue."
     );
+    return menu_help;
 }

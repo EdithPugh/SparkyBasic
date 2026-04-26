@@ -12,78 +12,81 @@
 namespace lexer {
 
 // lexes one token from the line
-std::variant<Token, LexResult::Err> lex_token(std::string_view line,
-    size_t& index) {
+auto lex_token(std::string_view line,
+    size_t& index)
+    -> std::variant<Token, LexResult::Err> {
     // match identifiers
-    if (std::isalpha(line[index])) {
-        std::string id;
-        while (index < line.size() && std::isalpha(line[index])) {
-            id.push_back(std::toupper(line[index]));
+    if (std::isalpha(line[index]) != 0) {
+        std::string identifier;
+        while (index < line.size() && std::isalpha(line[index]) != 0) {
+            identifier.push_back(
+                static_cast<char>(std::toupper(line[index]))
+            );
             index++;
         }
         // eat string sign, if there is one
         if (index < line.size() && line[index] == '$') {
-            id.push_back('$');
+            identifier.push_back('$');
             index++;
         }
-        return Token::from_var_or_keyword(std::move(id));
+        return Token::from_var_or_keyword(std::move(identifier));
     }
     // match string
     if (line[index] == '"') {
         return lex_string(line, index);
     }
     // match number
-    if (std::isdigit(line[index]) || line[index] == '.') {
+    if (std::isdigit(line[index]) != 0 || line[index] == '.') {
         return lex_num(line, index);
     }
     // match non-alphanumerical tokens
     switch (line[index]) {
     case '(': 
         index++;
-        return *Token::from_mono(Token::OpenParen);
+        return Token::from_mono(Token::OpenParen);
     case ')':
         index++; 
-        return *Token::from_mono(Token::CloseParen);
+        return Token::from_mono(Token::CloseParen);
     case '=':
         index++;
-        return *Token::from_mono(Token::Equal);
+        return Token::from_mono(Token::Equal);
     case ',':
         index++;
-        return *Token::from_mono(Token::Comma);
+        return Token::from_mono(Token::Comma);
     case ';':
         index++;
-        return *Token::from_mono(Token::Semicolon);
+        return Token::from_mono(Token::Semicolon);
     case '+':
         index++;
-        return *Token::from_mono(Token::Add);
+        return Token::from_mono(Token::Add);
     case '-':
         index++;
-        return *Token::from_mono(Token::Sub);
+        return Token::from_mono(Token::Sub);
     case '*':
         index++;
-        return *Token::from_mono(Token::Mul);
+        return Token::from_mono(Token::Mul);
     case '/':
         index++;
-        return *Token::from_mono(Token::Div);
+        return Token::from_mono(Token::Div);
     case '>':
         if (index + 1 >= line.size() || line[index + 1] != '=') {
             index++;
-            return *Token::from_mono(Token::GreaterThan);
+            return Token::from_mono(Token::GreaterThan);
         } else {
             index += 2;
-            return *Token::from_mono(Token::GreaterThanOrEqualTo);
+            return Token::from_mono(Token::GreaterThanOrEqualTo);
         }
     case '<':
         if (index + 1 >= line.size()
             || (line[index + 1] != '=' && line[index + 1] != '>')) {
             index++;
-            return *Token::from_mono(Token::LessThan);
+            return Token::from_mono(Token::LessThan);
         } else if (line[index + 1] == '>') {
             index += 2;
-            return *Token::from_mono(Token::NotEqualTo);
+            return Token::from_mono(Token::NotEqualTo);
         } else {
             index += 2;
-            return *Token::from_mono(Token::LessThanOrEqualTo);
+            return Token::from_mono(Token::LessThanOrEqualTo);
         }
     default:
         // since literal and keyword functions already return, this means that

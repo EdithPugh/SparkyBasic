@@ -14,8 +14,9 @@ namespace lexer {
  * @param index: The current index from lex_line.
  * @return: returns a variant containing either a token or error
  */
-std::variant<Token, LexResult::Err> lex_token(
+auto lex_token(
     std::string_view line,
-    size_t& index);
+    size_t& index)
+    -> std::variant<Token, LexResult::Err>;
 
 }

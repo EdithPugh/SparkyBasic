@@ -12,8 +12,9 @@ public:
     ReplGui* gui;
 };
 
-bool InterpreterApp::OnInit() {
+auto InterpreterApp::OnInit() -> bool {
     // wxWidgets sucks so we can't use unique_ptr.
+    // NOLINTNEXTLINE(cppcoreguidelines-owning-memory)
     gui = new ReplGui();
     gui->Show();
     return true;

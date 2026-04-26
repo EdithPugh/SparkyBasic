@@ -11,8 +11,6 @@ class ReplGui : public wxFrame {
     wxMenuBar* menu_bar;
     wxMenu* menu_file;
     wxMenu* menu_help;
-    
-    wxPanel* panel;
 
     wxBoxSizer* sizer;
 
@@ -20,10 +18,6 @@ class ReplGui : public wxFrame {
     wxBoxSizer* output_sizer;
     wxTextCtrl* entry_box;
     wxBoxSizer* entry_sizer;
-
-    // helper functions to setup the menus
-    void setup_file_menu(void);
-    void setup_help_menu(void);
 
     /**
      * A function bound to the input box enter key, all code related to

@@ -2,7 +2,7 @@
 
 #include "command_list.hpp"
 
-bool CommandList::add_command(Command&& command) {
+auto CommandList::add_command(Command&& command) -> bool {
     std::optional<size_t> line_num = command.get_line_num();
     if (!line_num) {
         return false;
@@ -10,11 +10,14 @@ bool CommandList::add_command(Command&& command) {
 
     for (auto iter = commands.begin(); iter != commands.end(); iter++) {
         std::optional<size_t> cur_line_num = iter->get_line_num();
+        // cur_line_num should be guaranteed to be indirect, since this method
+        // checks. Otherwise, uh oh!
+        assert(cur_line_num);
         if (*cur_line_num > *line_num) {
-            commands.insert(iter, command);
+            commands.insert(iter, std::move(command));
             return true;
         }
     }
-    commands.push_back(command);
+    commands.push_back(std::move(command));
     return true;
 }

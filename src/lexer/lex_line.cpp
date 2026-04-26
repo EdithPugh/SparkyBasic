@@ -17,13 +17,14 @@ namespace lexer {
 const size_t k_line_num_prealloc = 4;
 
 // helper function to eat line num
-std::optional<LexResult::Err> lex_line_num(std::string_view line,
+auto lex_line_num(std::string_view line,
     size_t& index,
-    std::vector<Token>& tokens);
+    std::vector<Token>& tokens)
+    -> std::optional<LexResult::Err>;
 
 void skip_whitespace(std::string_view line, size_t& index);
 
-LexResult lex_line(std::string_view line) {
+auto lex_line(std::string_view line) -> LexResult {
     std::vector<Token> tokens;
     size_t index = 0;
 
@@ -41,10 +42,10 @@ LexResult lex_line(std::string_view line) {
         if (line[index] == '\'') {
             break;
         }
-        if (index + 2 < line.size() &&
-            std::toupper(line[index]) == 'R'
-            && std::toupper(line[index+1]) == 'E'
-            && std::toupper(line[index+2]) == 'M'
+        if (index + 2 < line.size()
+            && (char)std::toupper(line[index]) == 'R'
+            && (char)std::toupper(line[index+1]) == 'E'
+            && (char)std::toupper(line[index+2]) == 'M'
         ) {
             break;
         }
@@ -64,9 +65,10 @@ LexResult lex_line(std::string_view line) {
     };
 } // end lex_line
 
-std::optional<LexResult::Err> lex_line_num(std::string_view line,
+auto lex_line_num(std::string_view line,
     size_t& index,
-    std::vector<Token>& tokens) {
+    std::vector<Token>& tokens)
+    -> std::optional<LexResult::Err> {
     if (line[index] == '0') {
         return LexResult::Err{
             std::string(k_msg_line_num_leading_zero)
@@ -80,7 +82,7 @@ std::optional<LexResult::Err> lex_line_num(std::string_view line,
     // eat linenum rq
     std::string line_num_str;
     line_num_str.reserve(k_line_num_prealloc);
-    while (index < line.size() && std::isdigit(line[index])) {
+    while (index < line.size() && std::isdigit(line[index]) != 0) {
         line_num_str.push_back(line[index]);
         index++;
     }
@@ -89,7 +91,7 @@ std::optional<LexResult::Err> lex_line_num(std::string_view line,
             std::string(k_msg_line_num_non_int)
         };
     }
-    if (line_num_str.size() != 0) {
+    if (line_num_str.empty()) {
         // shouldn't throw, since it's just a string of digits
         size_t line_num = std::stoul(line_num_str);
         tokens.push_back(Token::from_line_num(line_num));
@@ -98,7 +100,7 @@ std::optional<LexResult::Err> lex_line_num(std::string_view line,
 }
 
 void skip_whitespace(std::string_view line, size_t& index) {
-    while (index < line.size() && std::isspace(line[index])) {
+    while (index < line.size() && std::isspace(line[index]) != 0) {
         index++;
     }
 }

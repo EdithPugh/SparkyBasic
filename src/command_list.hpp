@@ -8,14 +8,13 @@
 class CommandList {
     std::list<Command> commands;
 public:
-
     using const_iterator = typename std::list<Command>::const_iterator;
 
     /**
      * Add a command to the internal list, sorted by its line number.
      */
-    bool add_command(Command&& command);
+    auto add_command(Command&& command) -> bool;
 
-    const_iterator begin(void) const { return commands.begin(); }
-    const_iterator end(void) const { return commands.end(); }
+    auto begin(void) -> const_iterator const { return commands.begin(); }
+    auto end(void) -> const_iterator const { return commands.end(); }
 };
